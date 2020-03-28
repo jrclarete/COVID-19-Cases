@@ -10,7 +10,7 @@ pip install COVID-19-Cases
 
 ## Usage
 
-The script will return a dictionary for the Global cases and/or list of dictionary for the Country cases
+The script will return a dictionary for the Global and Total cases and/or list of dictionaries for the Country cases
 
 ```
 import covid19cases as covid
@@ -29,15 +29,23 @@ Sample output:
 print(covid.get_country_cases())
 
 Sample output:
-[{'Country': 'China', 'TotalCases': '81,340', 'NewCases': '+55', 'TotalDeaths': '3,292', 'NewDeaths': '+5', 'TotalRecovered': '74,588', 'ActiveCases': '3,460', 'Critical': '1,034', 'CasesPerOneMillion': '57', 'DeathsPerOneMillion': '2'}, {'Country': 'USA', 'TotalCases': '100,514', 'NewCases': '+15,079', 'TotalDeaths': '1,546', 'NewDeaths': '+251', 'TotalRecovered': '2,465', 'ActiveCases': '96,503', 'Critical': '2,463', 'CasesPerOneMillion': '304', 'DeathsPerOneMillion': '5'}]
+[{'Country': 'USA', 'TotalCases': '104,256', 'NewCases': '+130', 'TotalDeaths': '1,704', 'NewDeaths': '+8', 'TotalRecovered': '2,525', 'ActiveCases': '100,027', 'Critical': '2,494', 'CasesPerOneMillion': '315', 'DeathsPerOneMillion': '5', 'FirstCase': 'Jan 20'}, {'Country': 'Italy', 'TotalCases': '86,498', 'NewCases': '', 'TotalDeaths': '9,134', 'NewDeaths': '', 'TotalRecovered': '10,950', 'ActiveCases': '66,414', 'Critical': '3,732', 'CasesPerOneMillion': '1,431', 'DeathsPerOneMillion': '151', 'FirstCase': 'Jan 29'}]
 ```
 
 ```
 # Get the latest case of specific country
-print(covid.get_country_cases("Italy"))
+print(get_country_cases("USA"))
 
 Sample output:
-{'Country': 'Italy', 'TotalCases': '86,498', 'NewCases': '+5,909', 'TotalDeaths': '9,134', 'NewDeaths': '+919', 'TotalRecovered': '10,950', 'ActiveCases': '66,414', 'Critical': '3,732', 'CasesPerOneMillion': '1,431', 'DeathsPerOneMillion': '151'}
+{'Country': 'USA', 'TotalCases': '104,256', 'NewCases': '+130', 'TotalDeaths': '1,704', 'NewDeaths': '+8', 'TotalRecovered': '2,525', 'ActiveCases': '100,027', 'Critical': '2,494', 'CasesPerOneMillion': '315', 'DeathsPerOneMillion': '5', 'FirstCase': 'Jan 20'}
+```
+
+```
+# Get the total data in more informative way
+print(get_total_cases())
+
+Sample output:
+{'Country': 'Total:', 'TotalCases': '613,828', 'NewCases': '+17,516', 'TotalDeaths': '28,229', 'NewDeaths': '+888', 'TotalRecovered': '137,223', 'ActiveCases': '448,376', 'Critical': '23,995', 'CasesPerOneMillion': '78.7', 'DeathsPerOneMillion': '3.6', 'FirstCase': ''}
 ```
 
 The data will change from time to time.

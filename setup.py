@@ -15,7 +15,7 @@ def install_requires():
 
 setup(
     name="COVID-19-Cases",
-    version="0.0.1",
+    version="0.0.2",
     description="A python script that generates latest data set of COVID-19 cases around the globe.",
     long_description=readme(),
     long_description_content_type="text/markdown",
