@@ -1,11 +1,26 @@
 from bs4 import BeautifulSoup
 import requests
+import re
 
 
 global_cases = {}
 country_cases = []
 th_row = []
 table_dict = {}
+
+
+def get_match(text):
+    """
+    Return text found in the list. It will be used for formatting the dictionary keys
+    """
+    search_text = ""
+    key_list = ["Country", "Critical", "Cases/", "Deaths/", "1st"]
+    for i in key_list:
+        search = re.search(i, text)
+        if search:
+            search_text = i
+            break
+    return search_text
 
 
 def load_data():
@@ -31,16 +46,19 @@ def load_data():
         td = tr.find_all("td")
         if th:
             for i in th:
-                th_text = i.text.replace(u'\xa0', u' ')
-                if th_text == "Country,Other":
-                    th_text = "Country"
-                if th_text == "Serious,Critical":
-                    th_text = "Critical"
-                if th_text == "Tot Cases/1M pop":
-                    th_text = "CasesPerOneMillion"
-                if th_text == "Tot Deaths/1M pop":
-                    th_text = "DeathsPerOneMillion"
-                th_row.append(th_text)
+                th_text = i.text
+                if get_match(th_text) == "Country":
+                    th_row.append("Country")
+                elif get_match(th_text) == "Critical":
+                    th_row.append("Critical")
+                elif get_match(th_text) == "Cases/":
+                    th_row.append("CasesPerOneMillion")
+                elif get_match(th_text) == "Deaths/":
+                    th_row.append("DeathsPerOneMillion")
+                elif get_match(th_text) == "1st":
+                    th_row.append("FirstCase")
+                else:
+                    th_row.append(th_text)
         if td:
             td_row = [j.text.strip() for j in td]
             table_dict = dict(zip(th_row, td_row))
@@ -56,7 +74,7 @@ def get_global_cases():
 
 def get_country_cases(country=None):
     """
-    Returns a dictionary for sepecific country or list of dictionary for all coutries.
+    Returns a dictionary for sepecific country or list of dictionaries for all coutries.
 
     Parameter:
     country =  Name of a Country that has COVID-19 case. Will return None if country is not available.
@@ -70,6 +88,17 @@ def get_country_cases(country=None):
         return result
     else:
         return country_cases
+
+
+def get_total_cases():
+    """
+    Returns a dictionary of more informative total cases.
+    """
+    result = None
+    for search in country_cases:
+        if search["Country"] == "Total:":
+            result = search
+    return result
 
 
 if __name__ == "__main__":
